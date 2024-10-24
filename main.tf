@@ -5,17 +5,17 @@ provider "aws" {
 }
 
 module "ebs_volume" {
-  source            = "./modules/ebs"
+  source = "git::https://github.com/adembaransdv/terra_examen.git//modules/ebs"
   volume_size       = 20
   availability_zone = "us-east-1a"
 }
 
 module "security_group" {
-  source = "./modules/security"
+  source = "git::https://github.com/adembaransdv/terra_examen.git//modules/security"
 }
 
 module "public_ip" {
-  source        = "./modules/ip"
+  source = "git::https://github.com/adembaransdv/terra_examen.git//modules/ip"
   instance_id   = aws_instance.adem.id
 }
 
@@ -54,10 +54,10 @@ resource "aws_instance" "adem" {
 
   user_data = <<-EOF
               #!/bin/bash
-              sudo apt update -y
-              sudo apt install -y nginx
-              sudo systemctl start nginx
-              sudo systemctl enable nginx
+              apt update -y
+              apt install -y nginx
+              systemctl start nginx
+              systemctl enable nginx
               EOF
 
   provisioner "local-exec" {
